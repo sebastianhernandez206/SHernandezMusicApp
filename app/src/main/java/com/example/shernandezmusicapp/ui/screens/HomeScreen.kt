@@ -98,7 +98,7 @@ fun HomeScreen(onAlbumClick: (String) -> Unit) {
                             contentPadding = PaddingValues(horizontal = 8.dp)
                         ) {
                             items(albums) { album ->
-                                AlbumCard(album = album, onClick = { onAlbumClick(album.id) })
+                                AlbumCard(album = album, onClick = { onAlbumClick(album.displayId) })
                             }
                         }
                     }
@@ -108,7 +108,7 @@ fun HomeScreen(onAlbumClick: (String) -> Unit) {
                     }
 
                     items(albums) { album ->
-                        RecentlyPlayedItem(album = album, onClick = { onAlbumClick(album.id) })
+                        RecentlyPlayedItem(album = album, onClick = { onAlbumClick(album.displayId) })
                     }
                 }
             }
