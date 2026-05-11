@@ -42,18 +42,20 @@ fun HomeScreen(onAlbumClick: (String) -> Unit) {
 
     Box(modifier = Modifier.fillMaxSize().background(Color(0xFFF3E5F5))) {
         Column {
-            // Top Header with Gradient
+            // Top Header with Padding and Rounded Corners on all sides
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(180.dp)
+                    .statusBarsPadding()
+                    .padding(16.dp)
+                    .height(160.dp)
                     .background(
                         Brush.verticalGradient(
                             colors = listOf(Color(0xFF9C27B0), Color(0xFF7B1FA2))
                         ),
-                        shape = RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp)
+                        shape = RoundedCornerShape(32.dp)
                     )
-                    .padding(24.dp)
+                    .padding(20.dp)
             ) {
                 Column {
                     Row(
