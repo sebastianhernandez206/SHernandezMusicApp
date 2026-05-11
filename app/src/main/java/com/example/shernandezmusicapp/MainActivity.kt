@@ -5,12 +5,17 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
+import com.example.shernandezmusicapp.ui.navigation.Detail
+import com.example.shernandezmusicapp.ui.navigation.Home
+import com.example.shernandezmusicapp.ui.screens.DetailScreen
+import com.example.shernandezmusicapp.ui.screens.HomeScreen
 import com.example.shernandezmusicapp.ui.theme.SHernandezMusicAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,29 +24,31 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             SHernandezMusicAppTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                MusicApp()
             }
         }
     }
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    SHernandezMusicAppTheme {
-        Greeting("Android")
+fun MusicApp() {
+    val navController = rememberNavController()
+    
+    NavHost(
+        navController = navController,
+        startDestination = Home
+    ) {
+        composable<Home> {
+            HomeScreen(onAlbumClick = { id ->
+                navController.navigate(Detail(albumId = id))
+            })
+        }
+        composable<Detail> { backStackEntry ->
+            val detail: Detail = backStackEntry.toRoute()
+            DetailScreen(
+                albumId = detail.albumId,
+                onBackClick = { navController.popBackStack() }
+            )
+        }
     }
 }

@@ -1,8 +1,10 @@
 package com.example.shernandezmusicapp.data.network
 
 import com.example.shernandezmusicapp.data.model.Album
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -17,9 +19,11 @@ interface MusicApiService {
         private const val BASE_URL = "https://musicapi.pjasoft.com/"
 
         fun create(): MusicApiService {
+            val contentType = "application/json".toMediaType()
+            val json = Json { ignoreUnknownKeys = true }
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(json.asConverterFactory(contentType))
                 .build()
                 .create(MusicApiService::class.java)
         }
